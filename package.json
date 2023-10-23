@@ -1,0 +1,19 @@
+{
+  "name": "agrifi-sdk-showcase",
+  "version": "1.0.0",
+  "description": "Agrifi SDK test & showcase",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@nexeraprotocol/agrifi-pm-sdk": "1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16.4.13",
+    "dotenv": "^16.0.0",
+    "ethers": "^5.7.2"
+  }
+}

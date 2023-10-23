@@ -1,0 +1,5 @@
+#.npmrc
+registry=https://registry.yarnpkg.com/
+//npm.pkg.github.com/:_authToken=<GITHUB_PERSONAL_ACCESS_TOKEN>
+@nexeraprotocol:registry=https://npm.pkg.github.com
+always-auth=true
