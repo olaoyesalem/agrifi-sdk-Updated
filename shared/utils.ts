@@ -11,7 +11,7 @@ dotenv.config();
 /* 
   Block Explorer for TORONET TestNet https://testnet.toronet.org/ 
 
-  You should be able to check the Txs (and Internal Txs) and Events emited of the related contracts here :
+  You should be able to check the Txs (and Internal Txs) and Events emitted from the related contracts here :
 
   - AgrifiProtocol : https://testnet.toronet.org/address.html?address=0x4aDCB6AD7BcDB8963c4598a24D3FCFE73ecd07A5
 
@@ -33,20 +33,37 @@ const provider_test = new ethers.providers.JsonRpcProvider(toronet_testnet_rpc_u
 
 
 //  ======================       Private Keys
-// Private Key of Deployer's EOA
-const privateKeyDeployer = process.env.TORONET_TEST_KEY as BytesLike;
+// Private Key of ADMIN's (also Deployer) EOA
+const privateKeyAdmin = process.env.ADMIN_TEST_KEY as BytesLike;
+
+// Private Key of BUYER's EOA
+const privateKeyBuyer = process.env.BUYER_TEST_KEY as BytesLike;
+
+// Private Key of POOL OPERATOR's EOA
+const privateKeyOperator = process.env.OPERATOR_TEST_KEY as BytesLike;
+
+// Private Key of STUCK_FUNDS_RECEIVER's EOA
+const privateKeyStuckFundsReceiver = process.env.STUCK_FUNDS_RECEIVER_TEST_KEY as BytesLike;
 
 
 
 //  ======================     WALLETS (Signers)  
 // Set Up the Wallets (Signers) instances
 // We create a Wallet Instance as an EOA, we can sign Txs with the privateKey we provide to the constructor
-export const walletDeployer = new ethers.Wallet(privateKeyDeployer, provider_test);
+export const walletAdmin = new ethers.Wallet(privateKeyAdmin, provider_test);
+
+export const walletBuyer = new ethers.Wallet(privateKeyBuyer, provider_test);
+export const walletOperator = new ethers.Wallet(privateKeyOperator, provider_test);
+export const walletStuckFundsReceiver = new ethers.Wallet(privateKeyStuckFundsReceiver, provider_test);
 
 
 //  ======================    Account Addresses
 // Deployer's Account Address ---> ADMIN, Organization & TestErc20 Minter 
-export const accountDeployer = walletDeployer.address;  //'0x43f78b342084e370f10e0cd07d56d95c1728c9d4'
+export const accountAdmin = walletAdmin.address;  //'0x43f78b342084e370f10e0cd07d56d95c1728c9d4'
+
+export const accountBuyer = walletBuyer.address;
+export const accountOperator = walletOperator.address;
+export const accountStuckFundsReceiver = walletStuckFundsReceiver.address;
 
 
 //  ======================    Contract Addresses
@@ -97,7 +114,7 @@ export const check_provider = async () => {
 
 
 export const read_test_ERC20Contract = async (address?: string, showAllowance?: boolean) => {
-    const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+    const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
     const name: string = await erc20_contract.name();
     const symbol: string = await erc20_contract.symbol();
     const totalSup: BigNumberish = await erc20_contract.totalSupply();
@@ -140,7 +157,7 @@ export const read_test_ERC20Contract = async (address?: string, showAllowance?: 
 
 export const read_Fractions_Contract = async (account: string, poolId: BigNumberish, showApproval? : boolean) => {
     // Public variables have getters implicitely (you can call them like functions and query their values/data)
-    const fractionsContractAddrFromAgrifi: string = await getSDKwithSigner(walletDeployer).AgrifiProtocol.fractionsContract();
+    const fractionsContractAddrFromAgrifi: string = await getSDKwithSigner(walletAdmin).AgrifiProtocol.fractionsContract();
     
     /*
        ERC1155 (and ERC721) contracts do NOT have a `decimals` parameter because
@@ -172,7 +189,7 @@ export const read_Fractions_Contract = async (account: string, poolId: BigNumber
     if (showApproval) {
         try {
             const isAgrifiApproved: boolean = await fractions_contract
-                                  .isApprovedForAll(account, getSDKwithSigner(walletDeployer).AgrifiProtocol.address);
+                                  .isApprovedForAll(account, getSDKwithSigner(walletAdmin).AgrifiProtocol.address);
 
             console.log(`Is AgrifiProtocol approved by Account --> ${account} for all its fractions? : ${isAgrifiApproved}`);
         } catch (error: any) {
@@ -258,7 +275,7 @@ export const read_AgrifiProtocol_Contract = async (poolId?: number) => {
 // ========================================================    WRITE OPs   =======================================================================
 
 export const mint_TestERC20_toAccount = async (account: string, amount: string) => {
-    const erc20contract = erc20_contract.connect(walletDeployer);
+    const erc20contract = erc20_contract.connect(walletAdmin);
 
     try {
       const decimals: BigNumber = await erc20contract.decimals();
@@ -342,7 +359,7 @@ const whiteList_Accounts_Static = async (
     addrToWhitelist: string[]
 ): Promise<boolean> => {
   
-    const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+    const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
   
     try {
   
@@ -361,7 +378,7 @@ export const whiteList_Accounts = async (addrToWhitelist: string[]) => {
     const status = await whiteList_Accounts_Static(addrToWhitelist);
   
     if (status) {
-        const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+        const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
 
         console.log(`\n\nWhitelisting accounts ------------------------------------------------------------\n`);
   
@@ -391,7 +408,7 @@ const remove_Accounts_FromWhitelist_Static = async (
     addrToRemoveFromWhitelist: string[]
 ): Promise<boolean> => {
 
-    const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+    const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
   
     try {
   
@@ -411,7 +428,7 @@ export const remove_Accounts_FromWhitelist = async (addrToRemoveFromWhitelist: s
 
     if (status) {
 
-        const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+        const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
 
         console.log(`\n\nRevoking accounts from Whitelist ------------------------------------------------------\n`);
 
@@ -439,7 +456,7 @@ export const remove_Accounts_FromWhitelist = async (addrToRemoveFromWhitelist: s
 
 const grant_Operator_Role_Static = async (address: string): Promise<boolean> => {
 
-    const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+    const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
   
     try {
   
@@ -459,7 +476,7 @@ export const grant_Operator_Role = async (address: string) => {
 
     if (status) {
 
-        const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+        const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
 
         console.log(`\n\nGranting Operator Role ------------------------------------------------------\n`);
 
@@ -487,7 +504,7 @@ export const grant_Operator_Role = async (address: string) => {
 
 const revoke_Operator_Role_Static = async (address: string): Promise<boolean> => {
 
-    const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+    const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
   
     try {
   
@@ -507,7 +524,7 @@ export const revoke_Operator_Role = async (address: string) => {
 
     if (status) {
 
-        const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+        const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
 
         console.log(`\n\nRevoking Operator Role ------------------------------------------------------\n`);
 
@@ -534,7 +551,7 @@ export const revoke_Operator_Role = async (address: string) => {
 
 
 const update_Pool_Operator_Static = async (poolId: BigNumberish, newOperatorAddr: string): Promise<boolean> => {
-    const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+    const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
   
     try {
   
@@ -554,7 +571,7 @@ export const update_Pool_Operator = async (poolId: BigNumberish, newOperatorAddr
 
     if (status) {
 
-        const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+        const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
 
         console.log(`\n\nUpdating Operator for ${poolId} Pool ------------------------------------------------------\n`);
 
@@ -582,7 +599,7 @@ export const update_Pool_Operator = async (poolId: BigNumberish, newOperatorAddr
 
 
 const set_StuckFundsReceiver_Static = async (address: string): Promise<boolean> => {
-    const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+    const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
   
     try {
   
@@ -602,7 +619,7 @@ export const set_StuckFundsReceiver = async (address: string) => {
 
     if (status) {
 
-        const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+        const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
 
         console.log(`\n\nSetting Stuck Funds Receiver ------------------------------------------------------\n`);
 
@@ -629,7 +646,7 @@ export const set_StuckFundsReceiver = async (address: string) => {
 
 
 const add_Funding_Currency_Static = async (fundingCurrencyAddr: string): Promise<boolean> => {
-    const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+    const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
   
     try {
   
@@ -649,7 +666,7 @@ export const add_Funding_Currency = async (fundingCurrencyAddr: string) => {
 
     if (status) {
 
-        const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+        const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
 
         console.log(`\n\nAdding Funding Currency ------------------------------------------------------\n`);
 
@@ -676,7 +693,7 @@ export const add_Funding_Currency = async (fundingCurrencyAddr: string) => {
 
 
 const remove_FundingCurrency_Static = async (fundingCurrencyAddr: string): Promise<boolean> => {
-    const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+    const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
   
     try {
   
@@ -696,7 +713,7 @@ export const remove_FundingCurrency = async (fundingCurrencyAddr: string) => {
 
     if (status) {
 
-        const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+        const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
 
         console.log(`\n\nRemoving Funding Currency ------------------------------------------------------\n`);
 
@@ -725,7 +742,7 @@ export const remove_FundingCurrency = async (fundingCurrencyAddr: string) => {
 // ================================================== PARAMETERS CHANGE
 
 const change_MaxFundsProvisionDuration_Static = async (duration: BigNumberish): Promise<boolean> => {
-    const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+    const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
   
     try {
   
@@ -745,7 +762,7 @@ export const change_MaxFundsProvisionDuration = async (duration: BigNumberish) =
 
     if (status) {
 
-        const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+        const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
 
         console.log(`\n\nSetting new MaxFundsProvisionDuration ------------------------------------------------------\n`);
 
@@ -772,7 +789,7 @@ export const change_MaxFundsProvisionDuration = async (duration: BigNumberish) =
 
 
 const change_MinInterestRate_Static = async (rate: string): Promise<boolean> => {
-    const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+    const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
   
     try {
   
@@ -792,7 +809,7 @@ export const change_MinInterestRate = async (rate: string) => {
 
     if (status) {
 
-        const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+        const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
 
         console.log(`\n\nSetting new MinInterestRate ------------------------------------------------------\n`);
 
@@ -819,7 +836,7 @@ export const change_MinInterestRate = async (rate: string) => {
 
 
 const change_MaxInterestRate_Static = async (rate: string): Promise<boolean> => {
-    const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+    const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
   
     try {
   
@@ -839,7 +856,7 @@ export const change_MaxInterestRate = async (rate: string) => {
 
     if (status) {
 
-        const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+        const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
 
         console.log(`\n\nSetting new MaxInterestRate ------------------------------------------------------\n`);
 
@@ -866,7 +883,7 @@ export const change_MaxInterestRate = async (rate: string) => {
 
 
 const change_MaxPoolDuration_Static = async (duration: BigNumberish): Promise<boolean> => {
-    const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+    const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
   
     try {
   
@@ -886,7 +903,7 @@ export const change_MaxPoolDuration = async (duration: BigNumberish) => {
 
     if (status) {
 
-        const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+        const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
 
         console.log(`\n\nSetting new MaxPoolDuration ------------------------------------------------------\n`);
 
@@ -913,7 +930,7 @@ export const change_MaxPoolDuration = async (duration: BigNumberish) => {
 
 
 const change_StartingOrganizationFeePercentage_Static = async (percentage: string): Promise<boolean> => {
-    const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+    const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
   
     try {
   
@@ -933,7 +950,7 @@ export const change_StartingOrganizationFeePercentage = async (percentage: strin
 
     if (status) {
 
-        const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+        const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
 
         console.log(`\n\nSetting new StartingOrganizationFeePercentage ------------------------------------------------------\n`);
 
@@ -960,7 +977,7 @@ export const change_StartingOrganizationFeePercentage = async (percentage: strin
 
 
 const change_OrganizationFeePercentageOnInterest_Static = async (percentage: string): Promise<boolean> => {
-    const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+    const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
   
     try {
   
@@ -980,7 +997,7 @@ export const change_OrganizationFeePercentageOnInterest = async (percentage: str
 
     if (status) {
 
-        const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+        const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
 
         console.log(`\n\nSetting new OrganizationFeePercentageOnInterest ------------------------------------------------------\n`);
 
@@ -1007,7 +1024,7 @@ export const change_OrganizationFeePercentageOnInterest = async (percentage: str
 
 
 const change_StuckFundsDuration_Static = async (duration: BigNumberish): Promise<boolean> => {
-    const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+    const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
   
     try {
   
@@ -1027,7 +1044,7 @@ export const change_StuckFundsDuration = async (duration: BigNumberish) => {
 
     if (status) {
 
-        const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+        const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
 
         console.log(`\n\nSetting new StuckFundsDuration ------------------------------------------------------\n`);
 
@@ -1145,7 +1162,7 @@ export const request_PoolCreationPermit = async (
 
 
 const validate_PoolRequest_Static = async (poolId: BigNumberish, approved: boolean): Promise<boolean> => {
-    const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+    const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
   
     try {
   
@@ -1165,7 +1182,7 @@ export const validate_PoolRequest = async (poolId: BigNumberish, approved: boole
 
     if (status) {
 
-        const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+        const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
 
         console.log(`\n\nValidating Pool creation request ------------------------------------------------------\n`);
 
