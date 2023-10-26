@@ -362,6 +362,8 @@ export const whiteList_Accounts = async (addrToWhitelist: string[]) => {
   
     if (status) {
         const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+
+        console.log(`\n\nWhitelisting accounts ------------------------------------------------------------\n`);
   
         try {
   
@@ -411,6 +413,8 @@ export const remove_Accounts_FromWhitelist = async (addrToRemoveFromWhitelist: s
 
         const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
 
+        console.log(`\n\nRevoking accounts from Whitelist ------------------------------------------------------\n`);
+
         try {
             
             const txRes: ethers.providers.TransactionResponse = await AGRIFI.removeUsersFromWhitelist(
@@ -456,6 +460,8 @@ export const grant_Operator_Role = async (address: string) => {
     if (status) {
 
         const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+
+        console.log(`\n\nGranting Operator Role ------------------------------------------------------\n`);
 
         try {
             
@@ -503,6 +509,8 @@ export const revoke_Operator_Role = async (address: string) => {
 
         const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
 
+        console.log(`\n\nRevoking Operator Role ------------------------------------------------------\n`);
+
         try {
             
             const txRes: ethers.providers.TransactionResponse = await AGRIFI.revokeOperatorRole(
@@ -547,6 +555,8 @@ export const update_Pool_Operator = async (poolId: BigNumberish, newOperatorAddr
     if (status) {
 
         const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+
+        console.log(`\n\nUpdating Operator for ${poolId} Pool ------------------------------------------------------\n`);
 
         try {
             
@@ -594,6 +604,8 @@ export const set_StuckFundsReceiver = async (address: string) => {
 
         const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
 
+        console.log(`\n\nSetting Stuck Funds Receiver ------------------------------------------------------\n`);
+
         try {
             
             const txRes: ethers.providers.TransactionResponse = await AGRIFI.setStuckFundsReceiverAddress(
@@ -639,6 +651,8 @@ export const add_Funding_Currency = async (fundingCurrencyAddr: string) => {
 
         const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
 
+        console.log(`\n\nAdding Funding Currency ------------------------------------------------------\n`);
+
         try {
             
             const txRes: ethers.providers.TransactionResponse = await AGRIFI.addFundingCurrency(
@@ -683,6 +697,8 @@ export const remove_FundingCurrency = async (fundingCurrencyAddr: string) => {
     if (status) {
 
         const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+
+        console.log(`\n\nRemoving Funding Currency ------------------------------------------------------\n`);
 
         try {
             
@@ -731,6 +747,8 @@ export const change_MaxFundsProvisionDuration = async (duration: BigNumberish) =
 
         const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
 
+        console.log(`\n\nSetting new MaxFundsProvisionDuration ------------------------------------------------------\n`);
+
         try {
             
             const txRes: ethers.providers.TransactionResponse = await AGRIFI.changeMaxFundsProvisionDuration(
@@ -775,6 +793,8 @@ export const change_MinInterestRate = async (rate: string) => {
     if (status) {
 
         const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+
+        console.log(`\n\nSetting new MinInterestRate ------------------------------------------------------\n`);
 
         try {
             
@@ -821,6 +841,8 @@ export const change_MaxInterestRate = async (rate: string) => {
 
         const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
 
+        console.log(`\n\nSetting new MaxInterestRate ------------------------------------------------------\n`);
+
         try {
             
             const txRes: ethers.providers.TransactionResponse = await AGRIFI.changeMaxInterestRate(
@@ -865,6 +887,8 @@ export const change_MaxPoolDuration = async (duration: BigNumberish) => {
     if (status) {
 
         const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+
+        console.log(`\n\nSetting new MaxPoolDuration ------------------------------------------------------\n`);
 
         try {
             
@@ -911,6 +935,8 @@ export const change_StartingOrganizationFeePercentage = async (percentage: strin
 
         const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
 
+        console.log(`\n\nSetting new StartingOrganizationFeePercentage ------------------------------------------------------\n`);
+
         try {
             
             const txRes: ethers.providers.TransactionResponse = await AGRIFI.changeStartingOrganizationFeePercentage(
@@ -956,6 +982,8 @@ export const change_OrganizationFeePercentageOnInterest = async (percentage: str
 
         const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
 
+        console.log(`\n\nSetting new OrganizationFeePercentageOnInterest ------------------------------------------------------\n`);
+
         try {
             
             const txRes: ethers.providers.TransactionResponse = await AGRIFI.changeOrganizationFeePercentageOnInterest(
@@ -1000,6 +1028,8 @@ export const change_StuckFundsDuration = async (duration: BigNumberish) => {
     if (status) {
 
         const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
+
+        console.log(`\n\nSetting new StuckFundsDuration ------------------------------------------------------\n`);
 
         try {
             
@@ -1084,6 +1114,8 @@ export const request_PoolCreationPermit = async (
 
         const AGRIFI = getSDKwithSigner(wallet).AgrifiProtocol;
 
+        console.log(`\n\nRequesting new Pool ------------------------------------------------------\n`);
+
         try {
             
             const txRes: ethers.providers.TransactionResponse = await AGRIFI.requestPoolCreationPermit(
@@ -1135,6 +1167,9 @@ export const validate_PoolRequest = async (poolId: BigNumberish, approved: boole
 
         const AGRIFI = getSDKwithSigner(walletDeployer).AgrifiProtocol;
 
+        console.log(`\n\nValidating Pool creation request ------------------------------------------------------\n`);
+
+
         try {
             
             const txRes: ethers.providers.TransactionResponse = await AGRIFI.validatePoolRequest(
@@ -1181,6 +1216,8 @@ export const create_Pool = async (wallet: ethers.Wallet, poolId: BigNumberish) =
 
         const AGRIFI = getSDKwithSigner(wallet).AgrifiProtocol;
 
+        console.log(`\n\nCreating Pool ${poolId}  ------------------------------------------------------\n`);
+
         try {
             
             const txRes: ethers.providers.TransactionResponse = await AGRIFI.createPool(
@@ -1225,6 +1262,8 @@ export const pruchase_Fractions = async (wallet: ethers.Wallet, poolId: BigNumbe
     if (status) {
 
         const AGRIFI = getSDKwithSigner(wallet).AgrifiProtocol;
+
+        console.log(`\n\nPurchasing Fractions  ------------------------------------------------------\n`);
 
         try {
             
@@ -1272,6 +1311,8 @@ export const receive_Funds_FromPool = async (wallet: ethers.Wallet, poolId: BigN
 
         const AGRIFI = getSDKwithSigner(wallet).AgrifiProtocol;
 
+        console.log(`\n\nStarting Pool ${poolId}  ------------------------------------------------------\n`);
+
         try {
             
             const txRes: ethers.providers.TransactionResponse = await AGRIFI.receiveFundsFromPool(
@@ -1318,6 +1359,8 @@ export const jump_NonFunded = async (wallet: ethers.Wallet, poolId: BigNumberish
 
         const AGRIFI = getSDKwithSigner(wallet).AgrifiProtocol;
 
+        console.log(`\n\nSetting Non Funded State for Pool ${poolId}  ------------------------------------------------------\n`);
+
         try {
             
             const txRes: ethers.providers.TransactionResponse = await AGRIFI.jumpToNonFunded(
@@ -1362,6 +1405,8 @@ export const payBack_Pool = async (wallet: ethers.Wallet, poolId: BigNumberish, 
     if (status) {
 
         const AGRIFI = getSDKwithSigner(wallet).AgrifiProtocol;
+
+        console.log(`\n\nPaying back Pool ${poolId}  ------------------------------------------------------\n`);
 
         try {
             
@@ -1409,6 +1454,8 @@ export const receive_Funds_After_Payback = async (wallet: ethers.Wallet, poolId:
 
         const AGRIFI = getSDKwithSigner(wallet).AgrifiProtocol;
 
+        console.log(`\n\nReceiving funds after payback from Pool ${poolId}  ------------------------------------------------------\n`);
+
         try {
             
             const txRes: ethers.providers.TransactionResponse = await AGRIFI.receiveFundsAfterPayback(
@@ -1454,6 +1501,8 @@ export const receive_Funds_After_NonFunded = async (wallet: ethers.Wallet, poolI
 
         const AGRIFI = getSDKwithSigner(wallet).AgrifiProtocol;
 
+        console.log(`\n\nReceiving funds after non funded Pool ${poolId}  ------------------------------------------------------\n`);
+
         try {
             
             const txRes: ethers.providers.TransactionResponse = await AGRIFI.receiveFundsAfterNonFunded(
@@ -1498,6 +1547,8 @@ export const retrieve_Stuck_Funds = async (wallet: ethers.Wallet, poolId: BigNum
     if (status) {
 
         const AGRIFI = getSDKwithSigner(wallet).AgrifiProtocol;
+
+        console.log(`\n\nRetrieving stuck funds from Pool ${poolId}  ------------------------------------------------------\n`);
 
         try {
             
