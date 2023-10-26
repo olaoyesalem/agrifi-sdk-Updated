@@ -20,7 +20,15 @@ export enum PoolStatus {
     RETRIEVED_BY_OPERATOR = 9,
 }
 
-export const AgrifiProtocolAddr = '0x4aDCB6AD7BcDB8963c4598a24D3FCFE73ecd07A5';
+// --------- ADDRESSES
+export const AgrifiProtocol_Addr = '0x4aDCB6AD7BcDB8963c4598a24D3FCFE73ecd07A5';
+export const FundingCurrency_Addr = '0xf15eBb1E72Ae567303418bB2d7945d92256A0946';
+export const FractionsContract_Addr = '0x0b9891E8cDfd3dDcfb25a193abdBB6EdA4C539A6';
+
+export const Admin_Addr = '0x43F78b342084e370f10e0Cd07d56d95c1728C9D4';
+export const Operator_Addr = '0x881c04BBaF07FC840332DA2Ce055C7d63eA66272';
+export const StuckFundsReceiver_Addr = '0x174E2d25C119209384D48223dae048696D2Da314';
+export const Buyer_Addr = '0x0546F34f7bA2e53E5DaFd18fb66f164803eBDed7';
 
 
 // -------------------------------------------------------------------------

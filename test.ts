@@ -1,6 +1,12 @@
 import {
-    accountDeployer,
-    walletDeployer,
+    accountAdmin,
+    walletAdmin,
+    accountBuyer,
+    accountOperator,
+    accountStuckFundsReceiver,
+    walletStuckFundsReceiver,
+    walletBuyer,
+    walletOperator,
     FractionsContractAddress,
     TestERC20Address,
     check_provider,
@@ -36,7 +42,7 @@ import {
     jump_NonFunded,
     retrieve_Stuck_Funds,
 } from "./shared/utils";
-import { AgrifiProtocolAddr } from "./shared/constants";
+import { AgrifiProtocol_Addr } from "./shared/constants";
 import { ethers } from "ethers";
 import dotenv from "dotenv";
 
@@ -47,7 +53,7 @@ dotenv.config();
 /* 
   Block Explorer for TORONET TestNet https://testnet.toronet.org/ 
 
-  You should be able to check the Txs (and Internal Txs) and Events emited of the related contracts here :
+  You should be able to check the Txs (and Internal Txs) and Events emitted from the related contracts here :
 
   - AgrifiProtocol : https://testnet.toronet.org/address.html?address=0x4aDCB6AD7BcDB8963c4598a24D3FCFE73ecd07A5
 
@@ -68,15 +74,16 @@ dotenv.config();
 /* ======================================   1st Check   ============================================================== */
 
 //check_provider();
-//read_Fractions_Contract(accountDeployer, 1, true);
-//read_test_ERC20Contract(accountDeployer, true);
-//read_AgrifiProtocol_Contract(1);
+//read_Fractions_Contract(accountAdmin, 1, true);
+//read_test_ERC20Contract(accountAdmin, true);
+//read_AgrifiProtocol_Contract(2);
 
 
 /* ======================================   TEST SHOWCASE    =================================================== */
 const zeroAddress = ethers.constants.AddressZero;
 const sevenMinutesToSecs = 420;
-const poolId_ = 1;
+const threeMinutesToSecs = 180;
+const poolId_ = 3;
 const maxFractions = 500;
 const minFractions = 200;
 const payBackAmount = "600";
@@ -90,7 +97,7 @@ const payBackAmount = "600";
 //whiteList_Accounts([zeroAddress]);
 //remove_Accounts_FromWhitelist([]);
 //add_Funding_Currency(zeroAddress);
-//remove_FundingCurrency(accountDeployer);
+//remove_FundingCurrency(accountAdmin);
 //change_MaxFundsProvisionDuration(0);
 //change_MinInterestRate("0");
 //change_MaxInterestRate("0");
@@ -109,12 +116,13 @@ const payBackAmount = "600";
         15% interest (not accounted for at pilot phase)
         PoolOperator is the Admin
 */ 
-//request_PoolCreationPermit(walletDeployer, 500, 200, "1", "0.15", 600, 1200, TestERC20Address);
+//request_PoolCreationPermit(walletDeployer, maxFractions, minFractions, "1", "0.15", threeMinutesToSecs, 1200, TestERC20Address);
 
 
 
 /* 2. Whitelist buyers (onlyAdmin) */
-//whiteList_Accounts([accountDeployer]);
+//whiteList_Accounts([accountBuyer]);
+
 
 
 
@@ -145,22 +153,22 @@ const payBackAmount = "600";
     5.  Buyers Approve the AgrifiProtocol for the erc20 respective amount
         Say he wants to buy 500 fractions.. each fraction costs 1 erc20 token (configured at request step (1.))
 */
-//approve_AGRIFI_ForAmount_Erc20(walletDeployer, "500");
+//approve_AGRIFI_ForAmount_Erc20(walletBuyer, "500");
 
 
 
 /* --------- Assert ------------------------------------ */
-//read_test_ERC20Contract(accountDeployer, true);
+//read_test_ERC20Contract(accountAdmin, true);
 
 
 /* 6. Buyers purchase fractions */
-//pruchase_Fractions(walletDeployer, poolId_, maxFractions);
+//pruchase_Fractions(walletBuyer, poolId_, maxFractions);
 
 
 /* --------- Assert ------------------------------------ */
-//read_test_ERC20Contract(accountDeployer, true);
-//read_test_ERC20Contract(AgrifiProtocolAddr);
-//read_Fractions_Contract(accountDeployer, poolId_);
+//read_test_ERC20Contract(accountBuyer, true);
+//read_test_ERC20Contract(AgrifiProtocol_Addr);
+//read_Fractions_Contract(accountBuyer, poolId_);
 //read_AgrifiProtocol_Contract(poolId_);
 
 
@@ -170,8 +178,8 @@ const payBackAmount = "600";
 
 
 /* --------- Assert ------------------------------------ */
-//read_test_ERC20Contract(accountDeployer, true);
-//read_test_ERC20Contract(AgrifiProtocolAddr);
+//read_test_ERC20Contract(accountAdmin, true);
+//read_test_ERC20Contract(AgrifiProtocol_Addr);
 //read_AgrifiProtocol_Contract(poolId_);
 
 
@@ -183,7 +191,7 @@ const payBackAmount = "600";
 
 
 /* --------- Assert ------------------------------------ */
-//read_test_ERC20Contract(accountDeployer, true);
+//read_test_ERC20Contract(accountAdmin, true);
 
 
 
@@ -193,8 +201,8 @@ const payBackAmount = "600";
 
 
 /* --------- Assert ------------------------------------ */
-//read_test_ERC20Contract(accountDeployer, true);
-//read_test_ERC20Contract(AgrifiProtocolAddr);
+//read_test_ERC20Contract(accountAdmin, true);
+//read_test_ERC20Contract(AgrifiProtocol_Addr);
 //read_AgrifiProtocol_Contract(poolId_);
 
 
@@ -202,21 +210,22 @@ const payBackAmount = "600";
 /* 9. Buyers Receive their Funds and upsides */
 
 /* 9.1 Buyers approve AgrifiProtocol as operator for their fractions */
-//setApproval_ForAll_Fractions(walletDeployer);
+//setApproval_ForAll_Fractions(walletBuyer);
 
 
 
 /* --------- Assert ------------------------------------ */
-//read_Fractions_Contract(accountDeployer, poolId_, true);
+//read_Fractions_Contract(accountBuyer, poolId_, true);
 
 
 
 /* 9.2 Buyer receive their funds & upsides after pool's pyaback */
-//receive_Funds_After_Payback(walletDeployer, poolId_);
+//receive_Funds_After_Payback(walletBuyer, poolId_);
 
 
 
 /* --------- Assert ------------------------------------ */
-//read_test_ERC20Contract(accountDeployer);
-//read_test_ERC20Contract(AgrifiProtocolAddr);
-//read_Fractions_Contract(accountDeployer, poolId_);
+//read_test_ERC20Contract(accountAdmin);
+//read_test_ERC20Contract(accountBuyer);
+//read_test_ERC20Contract(AgrifiProtocol_Addr);
+//read_Fractions_Contract(accountAdmin, poolId_);
