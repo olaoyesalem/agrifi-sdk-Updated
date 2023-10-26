@@ -1,4 +1,24 @@
-# How to use
+# SDK demo for AgrifiProtocol
+
+This project demonstrates the utilization of the agrifi-pm-sdk package, a TypeScript SDK designed for secure interaction with AgrifiProtocol Smart Contract.
+
+The main feature exported from the module is the `getSDK` typescript function.
+
+```typescript
+// Import the module
+import { getSDK } from "@nexeraprotocol/agrifi-pm-sdk";
+
+// Define the 'chainId' and 'signer' variables as per your network configuration
+
+// Get the sdk object configured with `chainId` of the network & a Signer connected to that network 
+const sdk = getSDK(chainId, signer);
+
+// Access the on-chain Smart Contract instance connected with the Signer
+const AgrifiProtocol_OnChain_Contract_Instance = sdk.AgrifiProtocol;
+```
+
+
+## How to use
 
 This project requires some familiarity with :
 
@@ -8,17 +28,17 @@ This project requires some familiarity with :
 - dotenv: https://www.npmjs.com/package/dotenv
 
 
-## Setup
+### Setup
 
 - Install typescript compiler : `npm install -g typescript`
 - Install TS node : `npm install -g ts-node`
-- Copy `.nmprc.example`, paste it to root directory, rename it to `.npmrc` & Add yout GitHub PAT in the `.npmrc` file (***_authToken=<GITHUB_PERSONAL_ACCESS_TOKEN>***)
-    - make sure your GitHub account has access to the ***agrifi-pm repo***
-- Install dependencies: `yarn install`
-- Copy `.env.example`, paste it to root directory, rename it to `.env` & configure the related variables
+- Copy `.nmprc.example`, paste it into the root directory, rename it to `.npmrc` & Add yout GitHub PAT in the `.npmrc` file (***_authToken=<GITHUB_PERSONAL_ACCESS_TOKEN>***)
+    - make sure your GitHub account has access to the **agrifi-pm** repo
+- Install dependencies: `yarn install` or `npm install`
+- Copy `.env.example`, paste it into the root directory, rename it to `.env` & configure the related variables
 
 
-## How to execute code/scripts 
+### How to execute code/scripts 
 
 **To execute a TypeScript file, write in the CLI (in the directory of the file)** :
 `ts-node <nameOfTsFile>.ts`
@@ -27,7 +47,7 @@ In each demo script sequentially uncomment and execute one function invocation a
 (i.e when `requestPoolCreationPermit()` is executed a new `poolId` is generated)
 
 
-### Regarding callStatic & Error-handling
+## Regarding callStatic & Error-handling
 
 - `callStatic` : The callStatic method (provided by EthersJS) is used to call a function on a contract without actually sending a Tx (without modifying the state of the contract and blockchain). This method basically simulates a Tx, thus, **callStatic** in some cases can be used to determine if a Tx will fail or succeed.
 
@@ -36,7 +56,7 @@ In each demo script sequentially uncomment and execute one function invocation a
 
 ## Happy & Unhappy paths 
 
-- **Happy Path** : Pool sucessfully gets paid back and eligible parties receive their funds, fees and upsides
+- **Happy Path** : Pool sucessfully gets paid back and eligible parties receive their funds, fees and upsides respectively
 
 - **Unhappy Path** :
 
@@ -47,7 +67,7 @@ In each demo script sequentially uncomment and execute one function invocation a
 
 ## Demos & Utils
 
-- `utils`: A Module that exports necessary variables, objects and functions (SDK-wise) to be utilized in the demos
+- `shared/utils.ts`: A Module that exports necessary variables, objects and functions (SDK-wise) to be utilized in the demos
 - `demo_HappyPath.ts`: Demo script showcasing a happy path scenario (..TBD..)
 - `demo_UnhappyPath_1.ts`: Demo script showcasing an unhappy path scenario (case1). (..TBD..)
 - `demo_UnhappyPath_2.ts`: Demo script showcasing an unhappy path scenario (case2). (..TBD..)
