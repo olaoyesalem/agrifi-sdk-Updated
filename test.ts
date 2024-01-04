@@ -76,7 +76,7 @@ dotenv.config();
 //check_provider();
 //read_Fractions_Contract(accountAdmin, 1, true);
 //read_test_ERC20Contract(accountAdmin, true);
-//read_AgrifiProtocol_Contract(2);
+//read_AgrifiProtocol_Contract();
 
 
 /* ======================================   TEST SHOWCASE    =================================================== */
@@ -116,7 +116,7 @@ const payBackAmount = "600";
         15% interest (not accounted for at pilot phase)
         PoolOperator is the Admin
 */ 
-//request_PoolCreationPermit(walletDeployer, maxFractions, minFractions, "1", "0.15", threeMinutesToSecs, 1200, TestERC20Address);
+//request_PoolCreationPermit(walletAdmin, maxFractions, minFractions, "1", "0.15", threeMinutesToSecs, 1200, TestERC20Address);
 
 
 
@@ -140,7 +140,7 @@ const payBackAmount = "600";
     4.  Create the Pool
         After this Tx is successful Buyers have a maximum time window of `fundsProvisionDuration` seconds to buy fractions
 */
-//create_Pool(walletDeployer, poolId_);
+//create_Pool(walletAdmin, poolId_);
 
 
 
@@ -174,7 +174,7 @@ const payBackAmount = "600";
 
 
 /* 7. Pool Operator starts the pool (FundsProvisionDuration must have already elapsed) */
-//receive_Funds_FromPool(walletDeployer, poolId_);
+//receive_Funds_FromPool(walletAdmin, poolId_);
 
 
 /* --------- Assert ------------------------------------ */
@@ -187,7 +187,7 @@ const payBackAmount = "600";
 /* 8. Pool Operator pays back the Pool (before the poolDuration Ends) */
 
 /* 8.1 Pool Operator approves AgrifiProtocol for the payBack Amount */
-//approve_AGRIFI_ForAmount_Erc20(walletDeployer, payBackAmount);
+//approve_AGRIFI_ForAmount_Erc20(walletAdmin, payBackAmount);
 
 
 /* --------- Assert ------------------------------------ */
@@ -196,7 +196,7 @@ const payBackAmount = "600";
 
 
 /* 8.2 Pool Operator pays back the Pool */
-//payBack_Pool(walletDeployer, poolId_, payBackAmount);
+//payBack_Pool(walletAdmin, poolId_, payBackAmount);
 
 
 
