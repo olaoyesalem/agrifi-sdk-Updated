@@ -16,6 +16,7 @@ import {
     read_AgrifiProtocol_Contract,
     read_Fractions_Contract,
     read_test_ERC20Contract,
+    isWhitelistedAccount,
     change_MaxFundsProvisionDuration,
     change_MaxInterestRate,
     change_MaxPoolDuration,
@@ -75,8 +76,9 @@ dotenv.config();
 
 //check_provider();
 //read_Fractions_Contract(accountAdmin, 1, true);
-//read_test_ERC20Contract(accountAdmin, true);
+//read_test_ERC20Contract(accountBuyer, true);
 //read_AgrifiProtocol_Contract();
+//isWhitelistedAccount(accountOperator);
 
 
 /* ======================================   TEST SHOWCASE    =================================================== */

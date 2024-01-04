@@ -271,6 +271,23 @@ export const read_AgrifiProtocol_Contract = async (poolId?: number) => {
 }
 
 
+export const isWhitelistedAccount = async (account: string) => {
+    const AGRIFI = getSDKwithSigner(provider_test).AgrifiProtocol;
+
+    let result;
+
+    try {
+        result = await AGRIFI.isWhitelisted(account);
+    } catch (error: any) {
+        console.log(error.message);
+    }
+    if (result) {
+        console.log(`Account: ${account} is whitelisted!`);
+    } else {
+        console.log(`Account ${account} is NOT whitelisted!`);
+    }
+}
+
 
 // ========================================================    WRITE OPs   =======================================================================
 
