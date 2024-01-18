@@ -43,7 +43,7 @@ import {
     jump_NonFunded,
     retrieve_Stuck_Funds,
 } from "./shared/utils";
-import { AgrifiProtocol_Addr } from "./shared/constants";
+import { oneMinuteToSecs } from "./shared/constants";
 import { ethers } from "ethers";
 import dotenv from "dotenv";
 
@@ -58,55 +58,48 @@ dotenv.config();
 
   - AgrifiProtocol : https://testnet.toronet.org/address.html?address=0x4aDCB6AD7BcDB8963c4598a24D3FCFE73ecd07A5
 
-
-
   - ERC1155Fractions Contract: https://testnet.toronet.org/address.html?address=0x0b9891E8cDfd3dDcfb25a193abdBB6EdA4C539A6
-
-
 
   - TestERC20 : https://testnet.toronet.org/address.html?address=0xf15eBb1E72Ae567303418bB2d7945d92256A0946
 
 */
-// -------------------------------------------------------------------------------------------------------------------------------
-
 // _____________________________________________________________________________________________________________________
+
+
+
+/* =====================================================    HAPPY PATH SHOWCASE     =================================================================== 
+
+    - Pool is Created (i.e. Requested --> Validated --> Created) AND minimum fractions are purchased by buyers within `fundsProvisionDuration`
+      time-window.
+    - The Pool can start (after `fundsProvisionDuration` elapses) ---> Operator receives funds from Pool
+    - After the Pool starts the Operator has `poolDuration` time-window to payback --> Operator Performs `payBack()`
+    - Buyers receive their funds back + upsides
+_________________________________________________________________________________________________________________________________________________________*/
+
+
 
 
 /* ======================================   1st Check   ============================================================== */
 
-//check_provider();
 //read_Fractions_Contract(accountAdmin, 1, true);
 //read_test_ERC20Contract(accountBuyer, true);
-//read_AgrifiProtocol_Contract();
+//read_AgrifiProtocol_Contract(4);
 //isWhitelistedAccount(accountOperator);
 
 
 /* ======================================   TEST SHOWCASE    =================================================== */
 const zeroAddress = ethers.constants.AddressZero;
-const sevenMinutesToSecs = 420;
-const threeMinutesToSecs = 180;
-const poolId_ = 3;
-const maxFractions = 500;
-const minFractions = 200;
+
+const fundsProvisionDuration_ = oneMinuteToSecs * 3;
+const poolDuration_ = oneMinuteToSecs * 20;
+
+const poolId_ = 4;
+const maxFractions_ = 500;
+const minFractions_ = 200;
 const payBackAmount = "600";
 
-
-// --------------------------- Reverts
-
-//set_StuckFundsReceiver(zeroAddress);
-//grant_Operator_Role(zeroAddress);
-//update_Pool_Operator(1, zeroAddress);
-//whiteList_Accounts([zeroAddress]);
-//remove_Accounts_FromWhitelist([]);
-//add_Funding_Currency(zeroAddress);
-//remove_FundingCurrency(accountAdmin);
-//change_MaxFundsProvisionDuration(0);
-//change_MinInterestRate("0");
-//change_MaxInterestRate("0");
-//change_MaxPoolDuration(0);
-//change_StartingOrganizationFeePercentage("1");
-//change_OrganizationFeePercentageOnInterest("1");
-//change_StuckFundsDuration(100);
+const pricePerFraction_ = "1"
+const interestPercentage_ = "0.15"
 
 
 // ---------------------------  Txs
@@ -114,19 +107,19 @@ const payBackAmount = "600";
 
 /* 
     1. Request Pool Creation (admin or operator) 
-        `10` minutes for fundsProvision &  `20` minutes for pool duration
+        `3` minutes for fundsProvision &  `20` minutes for pool duration
         15% interest (not accounted for at pilot phase)
         PoolOperator is the Admin
 */ 
-//request_PoolCreationPermit(walletAdmin, maxFractions, minFractions, "1", "0.15", threeMinutesToSecs, 1200, TestERC20Address);
+//request_PoolCreationPermit(walletAdmin, maxFractions_, minFractions_, pricePerFraction_, interestPercentage_, fundsProvisionDuration_, poolDuration_, TestERC20Address);
 
 
 
-/* 2. Whitelist buyers (onlyAdmin) */
+/* 2. Whitelist buyers (onlyAdmin) -- No need to whitelist already whitelisted accounts */
 //whiteList_Accounts([accountBuyer]);
 
 
-
+// ----
 
 /* 3. Validate the requested Pool Creation Request */
 //validate_PoolRequest(poolId_, true);
@@ -150,6 +143,10 @@ const payBackAmount = "600";
 //read_AgrifiProtocol_Contract(poolId_);
 
 
+/* --------- Assert  See balance of Admin & Buyer before the Pool starts ------------------------------------ */
+//read_test_ERC20Contract(accountAdmin, true);
+//read_test_ERC20Contract(accountBuyer, true);
+
 
 /* 
     5.  Buyers Approve the AgrifiProtocol for the erc20 respective amount
@@ -159,15 +156,11 @@ const payBackAmount = "600";
 
 
 
-/* --------- Assert ------------------------------------ */
-//read_test_ERC20Contract(accountAdmin, true);
-
-
 /* 6. Buyers purchase fractions */
 //pruchase_Fractions(walletBuyer, poolId_, maxFractions);
 
 
-/* --------- Assert ------------------------------------ */
+/* --------- Assert See balances after purchase ------------------------------------ */
 //read_test_ERC20Contract(accountBuyer, true);
 //read_test_ERC20Contract(AgrifiProtocol_Addr);
 //read_Fractions_Contract(accountBuyer, poolId_);
@@ -179,7 +172,7 @@ const payBackAmount = "600";
 //receive_Funds_FromPool(walletAdmin, poolId_);
 
 
-/* --------- Assert ------------------------------------ */
+/* --------- Assert See balances after Pool started ------------------------------------ */
 //read_test_ERC20Contract(accountAdmin, true);
 //read_test_ERC20Contract(AgrifiProtocol_Addr);
 //read_AgrifiProtocol_Contract(poolId_);
@@ -202,7 +195,7 @@ const payBackAmount = "600";
 
 
 
-/* --------- Assert ------------------------------------ */
+/* --------- Assert Changes In balances ------------------------------------ */
 //read_test_ERC20Contract(accountAdmin, true);
 //read_test_ERC20Contract(AgrifiProtocol_Addr);
 //read_AgrifiProtocol_Contract(poolId_);
