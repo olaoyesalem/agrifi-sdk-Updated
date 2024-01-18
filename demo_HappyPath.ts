@@ -71,8 +71,8 @@ dotenv.config();
 
     - Pool is Created (i.e. Requested --> Validated --> Created) AND minimum fractions are purchased by buyers within `fundsProvisionDuration`
       time-window.
-    - The Pool can start (after `fundsProvisionDuration` elapses) ---> Operator receives funds from Pool
-    - After the Pool starts the Operator has `poolDuration` time-window to payback --> Operator Performs `payBack()`
+    - The Pool can start (after `fundsProvisionDuration` elapses) ---> Operator receives funds from Pool (Org receives starting Fee)
+    - After the Pool starts the Operator has `poolDuration` time-window to payback --> Operator Performs `payBack()` (Org Receives Fee)
     - Buyers receive their funds back + upsides
 _________________________________________________________________________________________________________________________________________________________*/
 
