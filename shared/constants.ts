@@ -6,6 +6,9 @@ export const startingOrganizationFeePercentage = 20000; // 2 % // ethers.utils.p
 export const organizationFeePercentageOnInterest = 50000; // 5 % // ethers.utils.parseUnits('0.05', 6)
 export const stuckFundsDuration = 60 * 60 * 24 * 30 * 6; // 6 months
 
+export const oneMinuteToSecs = 60;
+export const oneDayToSecs = oneMinuteToSecs * 60 * 24;
+export const oneMonthToSecs = oneDayToSecs * 30;
 
 export enum PoolStatus {
     NON_EXISTENT = 0,
