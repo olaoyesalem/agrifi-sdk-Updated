@@ -83,17 +83,17 @@ ________________________________________________________________________________
 
 //read_Fractions_Contract(accountAdmin, 1, true);
 //read_test_ERC20Contract(accountBuyer, true);
-//read_AgrifiProtocol_Contract(4);
+//read_AgrifiProtocol_Contract();
 //isWhitelistedAccount(accountOperator);
 
 
 /* ======================================   TEST SHOWCASE    =================================================== */
 const zeroAddress = ethers.constants.AddressZero;
 
-const fundsProvisionDuration_ = oneMinuteToSecs * 3;
+const fundsProvisionDuration_ = oneMinuteToSecs * 4;
 const poolDuration_ = oneMinuteToSecs * 20;
 
-const poolId_ = 4;
+const poolId_ = 5;
 const maxFractions_ = 500;
 const minFractions_ = 200;
 const payBackAmount = "600";
@@ -101,13 +101,13 @@ const payBackAmount = "600";
 const pricePerFraction_ = "1"
 const interestPercentage_ = "0.15"
 
-
+const Agrifi_Addr = "0x4aDCB6AD7BcDB8963c4598a24D3FCFE73ecd07A5";
 // ---------------------------  Txs
 
 
 /* 
     1. Request Pool Creation (admin or operator) 
-        `3` minutes for fundsProvision &  `20` minutes for pool duration
+        `4` minutes for fundsProvision &  `20` minutes for pool duration
         15% interest (not accounted for at pilot phase)
         PoolOperator is the Admin
 */ 
@@ -157,12 +157,12 @@ const interestPercentage_ = "0.15"
 
 
 /* 6. Buyers purchase fractions */
-//pruchase_Fractions(walletBuyer, poolId_, maxFractions);
+//pruchase_Fractions(walletBuyer, poolId_, maxFractions_);
 
 
 /* --------- Assert See balances after purchase ------------------------------------ */
 //read_test_ERC20Contract(accountBuyer, true);
-//read_test_ERC20Contract(AgrifiProtocol_Addr);
+//read_test_ERC20Contract(Agrifi_Addr);
 //read_Fractions_Contract(accountBuyer, poolId_);
 //read_AgrifiProtocol_Contract(poolId_);
 
@@ -174,7 +174,7 @@ const interestPercentage_ = "0.15"
 
 /* --------- Assert See balances after Pool started ------------------------------------ */
 //read_test_ERC20Contract(accountAdmin, true);
-//read_test_ERC20Contract(AgrifiProtocol_Addr);
+//read_test_ERC20Contract(Agrifi_Addr);
 //read_AgrifiProtocol_Contract(poolId_);
 
 
@@ -197,10 +197,9 @@ const interestPercentage_ = "0.15"
 
 /* --------- Assert Changes In balances ------------------------------------ */
 //read_test_ERC20Contract(accountAdmin, true);
-//read_test_ERC20Contract(AgrifiProtocol_Addr);
+//read_test_ERC20Contract(Agrifi_Addr);
 //read_AgrifiProtocol_Contract(poolId_);
-
-
+//read_test_ERC20Contract(walletBuyer.address);
 
 /* 9. Buyers Receive their Funds and upsides */
 
@@ -222,5 +221,6 @@ const interestPercentage_ = "0.15"
 /* --------- Assert ------------------------------------ */
 //read_test_ERC20Contract(accountAdmin);
 //read_test_ERC20Contract(accountBuyer);
-//read_test_ERC20Contract(AgrifiProtocol_Addr);
-//read_Fractions_Contract(accountAdmin, poolId_);
+//read_test_ERC20Contract(Agrifi_Addr);
+//read_Fractions_Contract(accountBuyer, poolId_);
+//read_AgrifiProtocol_Contract(poolId_);

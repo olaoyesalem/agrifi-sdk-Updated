@@ -408,7 +408,7 @@ export const whiteList_Accounts = async (addrToWhitelist: string[]) => {
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             } 
   
         } catch (error: any) {
@@ -458,7 +458,7 @@ export const remove_Accounts_FromWhitelist = async (addrToRemoveFromWhitelist: s
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -506,7 +506,7 @@ export const grant_Operator_Role = async (address: string) => {
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -554,7 +554,7 @@ export const revoke_Operator_Role = async (address: string) => {
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -602,7 +602,7 @@ export const update_Pool_Operator = async (poolId: BigNumberish, newOperatorAddr
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -649,7 +649,7 @@ export const set_StuckFundsReceiver = async (address: string) => {
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -696,7 +696,7 @@ export const add_Funding_Currency = async (fundingCurrencyAddr: string) => {
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -743,7 +743,7 @@ export const remove_FundingCurrency = async (fundingCurrencyAddr: string) => {
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -792,7 +792,7 @@ export const change_MaxFundsProvisionDuration = async (duration: BigNumberish) =
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -839,7 +839,7 @@ export const change_MinInterestRate = async (rate: string) => {
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -886,7 +886,7 @@ export const change_MaxInterestRate = async (rate: string) => {
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -933,7 +933,7 @@ export const change_MaxPoolDuration = async (duration: BigNumberish) => {
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -980,7 +980,7 @@ export const change_StartingOrganizationFeePercentage = async (percentage: strin
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -1027,7 +1027,7 @@ export const change_OrganizationFeePercentageOnInterest = async (percentage: str
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -1074,7 +1074,7 @@ export const change_StuckFundsDuration = async (duration: BigNumberish) => {
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -1165,7 +1165,7 @@ export const request_PoolCreationPermit = async (
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -1214,7 +1214,7 @@ export const validate_PoolRequest = async (poolId: BigNumberish, approved: boole
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -1261,7 +1261,7 @@ export const create_Pool = async (wallet: ethers.Wallet, poolId: BigNumberish) =
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -1309,7 +1309,7 @@ export const pruchase_Fractions = async (wallet: ethers.Wallet, poolId: BigNumbe
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -1356,7 +1356,7 @@ export const receive_Funds_FromPool = async (wallet: ethers.Wallet, poolId: BigN
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -1404,7 +1404,7 @@ export const jump_NonFunded = async (wallet: ethers.Wallet, poolId: BigNumberish
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -1452,7 +1452,7 @@ export const payBack_Pool = async (wallet: ethers.Wallet, poolId: BigNumberish, 
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -1499,7 +1499,7 @@ export const receive_Funds_After_Payback = async (wallet: ethers.Wallet, poolId:
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -1546,7 +1546,7 @@ export const receive_Funds_After_NonFunded = async (wallet: ethers.Wallet, poolI
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
@@ -1593,7 +1593,7 @@ export const retrieve_Stuck_Funds = async (wallet: ethers.Wallet, poolId: BigNum
             const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
-                console.log(`\nTx Succeded`);
+                console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
             }  
 
         } catch (error: any) {
