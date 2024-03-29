@@ -2,7 +2,7 @@ import { getSDK } from "@nexeraprotocol/agrifi-pm-sdk";
 import {BigNumber, BigNumberish, BytesLike, ethers} from "ethers";
 import { FractionsContract_Interface, TestERC20_Interface } from "./contractsInterfaces";
 import { toronet_testnet_rpc_url, toronet_testnet_chainId } from "./constants";
-import dotenv from "dotenv";
+import * as dotenv from "dotenv";
 
 dotenv.config();
 
@@ -112,7 +112,6 @@ export const check_provider = async () => {
 }
 
 
-
 export const read_test_ERC20Contract = async (address?: string, showAllowance?: boolean) => {
     const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
     const name: string = await erc20_contract.name();
@@ -128,8 +127,7 @@ export const read_test_ERC20Contract = async (address?: string, showAllowance?: 
 
     try {
         const isValidFundingCurrenty = await AGRIFI.isFundingCurrency(erc20_contract.address);
-        console.log(`\nIs testERC20 ${erc20_contract.address} a valid funding currenty for AGRIFI ${AGRIFI.address}: ${isValidFundingCurrenty}\n`);
-
+      
     } catch (error: any) {
         console.log(error.message);
     }
@@ -803,7 +801,7 @@ export const change_MaxFundsProvisionDuration = async (duration: BigNumberish) =
 }
 
 // _____________________________________________________________________________________________________________________
-
+//export const txnHash_poolCreationPermit=0;
 
 const change_MinInterestRate_Static = async (rate: string): Promise<boolean> => {
     const AGRIFI = getSDKwithSigner(walletAdmin).AgrifiProtocol;
@@ -1162,15 +1160,18 @@ export const request_PoolCreationPermit = async (
                 fundingCurrency
             );
   
-            const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
+          const txRec: ethers.providers.TransactionReceipt = await txRes.wait();
   
             if (txRec.status == 1) {
                 console.log(`\nTx Succeded\nTx Hash: ${txRec.transactionHash}`);
+              
+
             }  
 
         } catch (error: any) {
             console.log(`\nTx failed:\n ${error?.["message"]}`);
             console.log(`\nHash of failed Tx: ${error?.transactionHash}`);
+            
         }
     }
 }
@@ -1602,4 +1603,5 @@ export const retrieve_Stuck_Funds = async (wallet: ethers.Wallet, poolId: BigNum
         }
     }
 }
+
 
